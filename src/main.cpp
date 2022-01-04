@@ -1,6 +1,6 @@
 #include "main.hpp"
 #include "GlobalNamespace/ResultsViewController.hpp"
-#include "GlobalNamespace/LevelCompletionResults.hpp"
+#include "GlobalNamespace/LevelSelectionNavigationController.hpp"
 
 #include "beatsaber-hook/shared/utils/il2cpp-utils.hpp"
 #include "beatsaber-hook/shared/utils/hooking.hpp"
@@ -64,6 +64,23 @@ MAKE_HOOK_MATCH(ResultsViewController_DidActivate, &ResultsViewController::DidAc
 
     }
 }
+
+MAKE_HOOK_MATCH(LevelSelectionNavigationController_DidActivate, &LevelSelectionNavigationController::DidActivate, void,
+    LevelSelectionNavigationController* self,
+    bool firstActivation,
+    bool addedToHierarchy,
+    bool screenSystemEnabling
+    ) {
+        LevelSelectionNavigationController_DidActivate(self, firstActivation, addedToHierarchy, screenSystemEnabling);
+
+        getLogger().info("Level Selection Opened");
+
+        if(firstActivation){
+            text = BeatSaberUI::CreateText(self->get_transform(), "Remember to touch grass!");
+
+            text->get_transform()->set_localPosition({ 53.0f, -40.5f, 0.0f });
+        }
+    }
         
 
 
@@ -78,5 +95,6 @@ extern "C" void load() {
 
     getLogger().info("Installing hooks...");
     INSTALL_HOOK(logger, ResultsViewController_DidActivate);
+    INSTALL_HOOK(logger, LevelSelectionNavigationController_DidActivate);
     getLogger().info("Installed all hooks!");
 }

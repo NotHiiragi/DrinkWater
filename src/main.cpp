@@ -70,17 +70,19 @@ MAKE_HOOK_MATCH(LevelSelectionNavigationController_DidActivate, &LevelSelectionN
     bool firstActivation,
     bool addedToHierarchy,
     bool screenSystemEnabling
-    ) {
+) {
         LevelSelectionNavigationController_DidActivate(self, firstActivation, addedToHierarchy, screenSystemEnabling);
 
         getLogger().info("Level Selection Opened");
 
-        if(firstActivation){
-            text = BeatSaberUI::CreateText(self->get_transform(), "Remember to touch grass!");
+    if(firstActivation){
+        text = BeatSaberUI::CreateText(self->get_transform(), "Remember to touch grass!");
 
-            text->get_transform()->set_localPosition({ 53.0f, -40.5f, 0.0f });
-        }
+        text->get_transform()->set_localPosition({ 53.0f, -40.5f, 0.0f });
+    } else {
+
     }
+}
         
 
 

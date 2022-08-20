@@ -76,4 +76,5 @@ if ((-not ($clean.IsPresent)) -and (Test-Path $qmod))
 }
 
 Compress-Archive -Path $filelist -DestinationPath $zip -Update
+
 Move-Item $zip $qmod -Force
